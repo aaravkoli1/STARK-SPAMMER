@@ -1,0 +1,277 @@
+VwS_ST4RK:
+-- ST4RK V1 - Ultimate Hater Spammer (With Owner Protection)
+-- SCRIPT BY ST4RK ABBU
+
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ST4RK V1"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Minimized button
+local minimizedBtn = Instance.new("TextButton")
+minimizedBtn.Size = UDim2.new(0, 140, 0, 30)
+minimizedBtn.Position = UDim2.new(0, 10, 1, -40)
+minimizedBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+minimizedBtn.Text = "ST4RK V1"
+minimizedBtn.TextColor3 = Color3.new(1, 1, 1)
+minimizedBtn.TextScaled = true
+minimizedBtn.Font = Enum.Font.GothamBold
+minimizedBtn.Visible = false
+minimizedBtn.Parent = screenGui
+
+local minCorner = Instance.new("UICorner")
+minCorner.CornerRadius = UDim.new(0, 6)
+minCorner.Parent = minimizedBtn
+
+-- Main Frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 300, 0, 140)
+frame.Position = UDim2.new(0.5, -150, 0.5, -70)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+frame.BorderSizePixel = 0
+frame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 10)
+corner.Parent = frame
+
+-- RGB Border
+local border = Instance.new("Frame")
+border.Size = UDim2.new(1, 4, 1, 4)
+border.Position = UDim2.new(0, -2, 0, -2)
+border.BackgroundTransparency = 0
+border.BorderSizePixel = 0
+border.ZIndex = 0
+border.Parent = frame
+
+local borderCorner = Instance.new("UICorner")
+borderCorner.CornerRadius = UDim.new(0, 12)
+borderCorner.Parent = border
+
+-- RGB Animation
+spawn(function()
+    while task.wait(0.05) do
+        local hue = tick() * 50 % 360
+        border.BackgroundColor3 = Color3.fromHSV(hue / 360, 1, 1)
+    end
+end)
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundTransparency = 1
+title.Text = "ST4RK V1"
+title.TextColor3 = Color3.fromRGB(0, 255, 255)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBold
+title.Parent = frame
+
+-- TextBox
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(0.6, 0, 0, 25)
+textBox.Position = UDim2.new(0.05, 0, 0.28, 0)
+textBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+textBox.PlaceholderText = "Enter hater name..."
+textBox.Text = ""
+textBox.TextColor3 = Color3.new(1, 1, 1)
+textBox.TextScaled = true
+textBox.Font = Enum.Font.Gotham
+textBox.Parent = frame
+
+local tbCorner = Instance.new("UICorner")
+tbCorner.CornerRadius = UDim.new(0, 6)
+tbCorner.Parent = textBox
+
+-- Toggle Button (ON / STOP)
+local toggleBtn = Instance.new("TextButton")
+toggleBtn.Size = UDim2.new(0.3, 0, 0, 25)
+toggleBtn.Position = UDim2.new(0.7, 0, 0.28, 0)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+toggleBtn.Text = "ON"
+toggleBtn.TextColor3 = Color3.new(1, 1, 1)
+toggleBtn.TextScaled = true
+toggleBtn.Font = Enum.Font.GothamBold
+toggleBtn.Parent = frame
+
+local toggleCorner = Instance.new("UICorner")
+toggleCorner.CornerRadius = UDim.new(0, 6)
+toggleCorner.Parent = toggleBtn
+
+-- Status Label
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(0.9, 0, 0, 20)
+status.Position = UDim2.new(0.05, 0, 0.62, 0)
+status.BackgroundTransparency = 1
+status.Text = "Ready"
+status.TextColor3 = Color3.fromRGB(200, 200, 200)
+status.TextScaled = true
+status.TextXAlignment = Enum.TextXAlignment.Center
+status.Font = Enum.Font.Gotham
+status.Parent = frame
+
+-- Minimize Button (–)
+local minimizeBtn = Instance.new("TextButton")
+minimizeBtn.Size = UDim2.new(0, 25, 0, 25)
+minimizeBtn.Position = UDim2.new(1, -60, 0, 3)
+minimizeBtn.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+minimizeBtn.Text = "–"
+minimizeBtn.TextColor3 = Color3.new(0, 0, 0)
+minimizeBtn.TextScaled = true
+minimizeBtn.Font = Enum.Font.GothamBold
+minimizeBtn.Parent = frame
+
+local minBtnCorner = Instance.new("UICorner")
+minBtnCorner.CornerRadius = UDim.new(0, 6)
+minBtnCorner.Parent = minimizeBtn
+
+-- Close Button (X)
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, 25, 0, 25)
+closeBtn.Position = UDim2.new(1, -32, 0, 3)
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.new(1, 1, 1)
+closeBtn.TextScaled = true
+closeBtn.Parent = frame
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 6)
+closeCorner.Parent = closeBtn
+
+-- Chat function
+local function sendChat(message)
+    local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+    if chatEvent then
+        local sayMessage = chatEvent:FindFirstChild("SayMessageRequest")
+        if sayMessage then
+            sayMessage:FireServer(message, "All")
+            return
+        end
+    end
+
+    local TextChatService = game:GetService("TextChatService")
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        local textChannels = TextChatService:FindFirstChild("TextChannels")
+        if textChannels then
+            local general = textChannels:FindFirstChild("RBXGeneral")
+            if general then
+                general:SendAsync(message)
+                return
+            end
+        end
+    end
+
+    pcall(function()
+        StarterGui:SetCore("ChatMakeSystemMessage", {Text = message})
+    end)
+end
+
+-- Signature
+local signature = "\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_-\_\_\\_\_-\_\_\_\_\\_\_\_\_-\_\_\_\_--\_\_--\___--\_-_"
+
+-- Tags list
+local tags = {"TMKX ME HELICOPTER😭", "TMKX ME BAMBOO😂", "TMKX ME TRAIN😭", "TMKX 6KKI🤣 ", "TMKX ME ZOO😖", "TMKX ME ANIMALS😎", "TMKX ME 7LODE😭", "SCRIPT BY STARK ABBU👑"}
+
+-- Spamming control
+local isSpamming = false
+local spamTask = nil
+
+-- Toggle button
+toggleBtn.MouseButton1Click:Connect(function()
+    local input = textBox.Text
+    local haterName = input:match("^%s*(.-)%s*$"):lower()  -- lowercase for case-insensitive check
+
+    -- Owner protection checks
+    local containsST4RK = haterName:find("ST4RK")
+    local containsShorya = haterName:find("shorya")
+
+    if containsST4RK and containsShorya then
+        status.Text = "you cant put name of owner and his friend's name"
+        status.TextColor3 = Color3.fromRGB(255, 50, 50)
+        return
+    elseif containsST4RK then
+        status.Text = "u cant put owner's name"
+        status.TextColor3 = Color3.fromRGB(255, 50, 50)
+        return
+    elseif containsShorya then
+        status.Text = "u cant put owner's friend's name"
+        status.TextColor3 = Color3.fromRGB(255, 50, 50)
+        return
+    elseif haterName == "" then
+        status.Text = "Enter a name!"
+        status.TextColor3 = Color3.fromRGB(255, 100, 100)
+        return
+    end
+
+    -- If passed checks, toggle spam
+    isSpamming = not isSpamming
+
+    if isSpamming then
+        toggleBtn.Text = "STOP"
+        toggleBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+        status.Text = "Spamming: " .. input
+        status.TextColor3 = Color3.fromRGB(0, 255, 0)
+
+        spamTask = task.spawn(function()
+            while isSpamming do
+                for _, tag in ipairs(tags) do
+                    if not isSpamming then break end
+                    sendChat(signature .. " " .. input .. " (" .. tag .. ")")
+                    task.wait(1.2)
+                end
+                if isSpamming then
+                    sendChat(signature .. " SCRIPT BY ST4RK ABBU")
+                end
+                task.wait(2)
+            end
+        end)
+    else
+        toggleBtn.Text = "ON"
+        toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+        status.Text = "Spam stopped"
+        status.TextColor3 = Color3.fromRGB(255, 100, 100)
+        if spamTask then
+            task.cancel(spamTask)
+            spamTask = nil
+        end
+    end
+end)
+
+-- Close button
+closeBtn.MouseButton1Click:Connect(function()
+    isSpamming = false
+    if spamTask then task.cancel(spamTask) end
+    screenGui:Destroy()
+end)
+
+-- Minimize
+local minimized = false
+
+local function minimizeGUI()
+    if minimized then return end
+    minimized = true
+    minimizedBtn.Visible = true
+    TweenService:Create(frame, TweenInfo.new(0.3), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+    task.wait(0.3)
+    frame.Visible = false
+end
+
+local function restoreGUI()
+    if not minimized then return end
+    minimized = false
+    frame.Visible = true
+    minimizedBtn.Visible = false
+    TweenService:Create(frame, TweenInfo.new(0.3), {Size = UDim2.new(0, 300, 0, 140)}):Play()
+end
+
+minimizeBtn.MouseButton1Click:Connect(minimizeGUI)
+minimizedBtn.MouseButton1Click:Connect(restoreGUI)
